@@ -2,9 +2,6 @@
 Net-SNMP off-by-one stack overflow
 
 
-net-snmp off-by-one overflow
-
-
 
 Tested with latest version https://github.com/net-snmp/net-snmp
 ```
