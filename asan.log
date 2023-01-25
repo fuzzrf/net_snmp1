@@ -1,0 +1,60 @@
+=================================================================
+==416630==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7ffc88d546a0 at pc 0x7f3b71b7a4a1 bp 0x7ffc88d538c0 sp 0x7ffc88d538b0
+WRITE of size 1 at 0x7ffc88d546a0 thread T0
+    #0 0x7f3b71b7a4a0 in smux_open_process (/var/snmp/lib/libnetsnmpagent.so.40+0xb24a0)
+    #1 0x7f3b71b77f67 in smux_accept (/var/snmp/lib/libnetsnmpagent.so.40+0xaff67)
+    #2 0x55f82d2a32e3 in receive (/var/snmp/sbin/snmpd+0xa2e3)
+    #3 0x55f82d2a1e1e in main (/var/snmp/sbin/snmpd+0x8e1e)
+    #4 0x7f3b70d40d8f in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+    #5 0x7f3b70d40e3f in __libc_start_main_impl ../csu/libc-start.c:392
+    #6 0x55f82d29ef44 in _start (/var/snmp/sbin/snmpd+0x5f44)
+
+Address 0x7ffc88d546a0 is located in stack of thread T0 at offset 3488 in frame
+    #0 0x7f3b71b795ca in smux_open_process (/var/snmp/lib/libnetsnmpagent.so.40+0xb15ca)
+
+  This frame has 8 object(s):
+    [48, 49) 'type' (line 884)
+    [64, 72) 'version' (line 885)
+    [96, 104) 'oid_name_len' (line 891)
+    [128, 136) 'string_len' (line 891)
+    [160, 1184) 'oid_name' (line 886)
+    [1312, 2336) 'passwd' (line 887)
+    [2464, 3488) 'descr' (line 888) <== Memory access at offset 3488 overflows this variable
+    [3616, 4640) 'oid_print' (line 889)
+HINT: this may be a false positive if your program uses some custom stack unwind mechanism, swapcontext or vfork
+      (longjmp and C++ exceptions *are* supported)
+SUMMARY: AddressSanitizer: stack-buffer-overflow (/var/snmp/lib/libnetsnmpagent.so.40+0xb24a0) in smux_open_process
+Shadow bytes around the buggy address:
+  0x1000111a2880: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x1000111a2890: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x1000111a28a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x1000111a28b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x1000111a28c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x1000111a28d0: 00 00 00 00[f2]f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2
+  0x1000111a28e0: f2 f2 f2 f2 00 00 00 00 00 00 00 00 00 00 00 00
+  0x1000111a28f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x1000111a2900: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x1000111a2910: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x1000111a2920: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+  Shadow gap:              cc
+==416630==ABORTING
+
